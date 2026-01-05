@@ -1,0 +1,651 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f4f4f4;
+    color: #fff;
+  }
+
+/* 初始模糊透明 */
+
+h1, h2, h3, h4, h5, h6, p, .emotion-title, .analysis-text {
+filter: blur(6px);
+opacity: 0;
+transition: filter 1.2s ease, opacity 1.2s ease;
+color: #191919;
+}
+
+h1.active, h2.active, h3.active, h4.active, h5.active, h6.active, p.active, 
+.emotion-title.active, .analysis-text.active {
+filter: blur(0);
+opacity: 1;
+}
+
+
+.h6{
+font-size:20px;
+  letter-spacing:6px;
+
+}
+
+
+  /* ========== 導覽列 ========== */
+ header {
+width: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 1000;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px  60px;
+
+/* 毛玻璃效果 */
+background-color: rgba(0, 0, 0, 0);
+backdrop-filter: blur(35px);
+-webkit-backdrop-filter: blur(12px);
+
+/* 柔順過渡 
+border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+transition: background-color 0.3s ease, border-color 0.3s ease;
+   */
+}
+
+
+
+.logo img {
+    height: 35px; /* logo  */
+    width: auto;  
+    object-fit: contain;
+  }
+
+
+  nav {
+    display: flex;
+    gap: 40px;
+    
+  }
+
+  nav a {
+    position: relative;
+    color: #333;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding-bottom: 12px;
+    transition: color 0.5s ease;
+    font-weight: 500;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 8px;
+    width: 0;
+    background: url('data:image/svg+xml;utf8,<svg width="24" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M0 4 Q6 0 12 4 T24 4" fill="none" stroke="%23EA86AA" stroke-width="2"/></svg>') repeat-x;
+    /* 上面是顏色 */
+    background-size: 24px 8px;
+    opacity: 1;
+    transition: background 0.5s ease, height 0.5s ease, opacity 0.5s ease, width 1s ease;
+    background-position: 0 0;
+  }
+
+  nav a:hover {
+    color: #EA86AA;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+    animation: wave 0.3s linear infinite;
+    opacity: 1;
+    height: 8px;
+    background: url('data:image/svg+xml;utf8,<svg width="24" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M0 4 Q6 0 12 4 T24 4" fill="none" stroke="%23EA86AA" stroke-width="2"/></svg>') repeat-x;
+    /* 上面是顏色 */
+    background-size: 24px 8px;
+    background-position: 0 0;
+  }
+
+  nav a:not(:hover)::after {
+    animation: none;
+    width: 0;
+    background: none;
+    height: 2px;
+    background-color: transparent;
+    opacity: 0;
+    transition: height 0.5s ease, opacity 0.5s ease, width 1s ease;
+  }
+
+  @keyframes wave {
+    from { background-position: 0 0; }
+    to { background-position: 24px 0; }
+  }
+
+
+ 
+/* 文字模糊動畫 */
+h1, h2, h3, h4, h5, h6, p {
+filter: blur(6px);
+opacity: 0;
+transition: filter 1.2s ease, opacity 1.2s ease;
+}
+
+h1.active, h2.active, h3.active, h4.active, h5.active, h6.active, p.active {
+filter: blur(0);
+opacity: 1;
+}
+
+
+  /* ========== 上傳頁 ========== */
+
+.upload-page {
+padding: 100px 20px;
+text-align: center;
+background-color: #f4f4f4;
+padding-top: 100px;
+}
+
+.upload-header {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 12px;
+margin-bottom: 24px;
+}
+
+.upload-title {
+font-size: 2rem;
+color: #333;
+padding-top: 40px;
+}
+
+.upload-description {
+font-size: 1.1rem;
+color: #555;
+max-width: 600px;
+margin: 0 auto 40px;
+line-height: 1.5;
+}
+
+.upload-dropzone {
+width: 100%;
+max-width: 600px;
+margin: 0 auto;
+padding: 40px;
+border: 2px dashed #aaa;
+border-radius: 16px;
+background-color: #fafafa;
+transition: 0.3s;
+position: relative;
+
+}
+
+.upload-dropzone.dragover {
+background-color: #e6f7ff;
+border-color: #00aaff;
+}
+
+.drop-label {
+display: block;
+font-size: 1rem;
+color: #444;
+cursor: pointer;
+}
+
+.upload-button {
+margin-top: 20px;
+padding: 10px 24px;
+font-size: 1rem;
+border: none;
+font-weight: 500;
+ background-color: #EA86AA; 
+color: #EADE81;
+border-radius: 9999px;
+cursor: pointer;
+transition: background 0.3s;
+}
+
+.upload-button:hover {
+    background-color: #EADE81; /* 按鈕 */
+    color: #EA86AA;
+}
+
+#upload-status {
+margin-top: 16px;
+color: green;
+font-size: 0.95rem;
+}
+
+
+
+  /* 情緒分析區 */
+  .container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    margin: 20px auto;
+    gap: 20px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 50px;
+    background-color: #f4f4f4;
+    
+  }
+/* 左側 */
+.left-panel {
+flex: 1;
+background: #fff;
+border-radius: 15px;
+padding: 40px;
+box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+ overflow: visible;
+}
+
+.left-panel h2 {
+font-size: 1.5em;
+border-bottom: 2px solid #eee;
+padding-bottom: 5px;
+margin-bottom: 15px;
+}
+
+.unity-image {
+  width: 100%;      /* 容器寬度 */
+  height: 480px;    /* 容器高度 */
+  background: #f6faff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;   /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  overflow: visible;
+}
+
+.unity-image canvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;  /* 去掉默認 inline 行為 */
+}
+
+
+/* 情緒條外層 */
+.emotion-bar {
+margin-bottom: 20px;
+}
+
+/* 左右情緒詞 */
+.label-row {
+display: flex;
+justify-content: space-between;
+font-size: 0.9em;
+margin-bottom: 6px;
+color: #555;
+}
+
+/* 節點線容器 */
+.line-bar {
+position: relative;
+height: 16px; /* 調整點的垂直位置空間 */
+}
+
+/* 細線 */
+.line {
+position: absolute;
+top: 50%;
+left: 0;
+width: 100%;
+height: 2px;
+background: #ccc;
+transform: translateY(-50%);
+}
+
+/* 節點 */
+.dot {
+position: absolute;
+top: 50%;
+width: 14px;
+height: 14px;
+background: #ff9a9e;
+border-radius: 50%;
+transform: translate(-50%, -50%);
+box-shadow: 0 0 6px rgba(0,0,0,0.2);
+transition: left 0.5s ease; /* 位置動畫 */
+}
+
+  /* 右側 */
+  .right-panel {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .right-panel h2 {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+    color: #444;
+  }
+  .analysis-card {
+    background: rgba(255, 255, 255, 0.2); /* 透明度降低 */
+backdrop-filter: blur(10px); /* 毛玻璃模糊 */
+-webkit-backdrop-filter: blur(10px);
+border-radius: 15px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); 
+border: 1px solid rgba(255, 255, 255, 0.3); /* 半透明邊框 */
+padding: 20px;
+position: relative;
+color: #333; 
+  }
+
+
+  .emotion-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  .big-bar-container {
+    background: #eee;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .big-bar-fill {
+    background: linear-gradient(90deg,  #EADE81, #EA86AA);/* 色條 */
+    height: 100%;
+    width: 0%;
+    transition: width 1s ease;
+  }
+  .percentage-tooltip {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 0.8em;
+    border-radius: 4px;
+    display: none;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .big-bar-container:hover .percentage-tooltip {
+    display: block;
+  }
+  .analysis-text {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.4;
+  }
+
+
+  /* 統一三個按鈕的外觀風格 */
+.buttons button,
+.custom-file-upload {
+  background-color: #EA86AA;
+  color: #EADE81;
+  border: none;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(234, 134, 170, 0.3);
+  margin: 10px;
+}
+
+.buttons button:hover,
+.custom-file-upload:hover {
+  background-color: #EADE81;
+  color: #EA86AA;
+  box-shadow: 0 6px 18px rgba(234, 222, 129, 0.4);
+}
+/* 輸入分段樣式（精簡版） */
+.seg-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #EA86AA;
+  color: #EADE81;
+  border-radius: 9999px;
+  padding: 6px 14px; /* 原本 10px 22px → 改成更緊湊 */
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 3px 6px rgba(0, 123, 255, 0.25);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  height: 42px; /* 跟按鈕高度接近 */
+}
+
+
+/* 數字輸入框 */
+.seg-label input {
+  width: 55px; /* 縮短寬度 */
+  border: none;
+  border-radius: 9999px;
+  padding: 4px;
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+  color: #EA86AA;
+  background-color: #fff8f9;
+  transition: box-shadow 0.3s ease;
+}
+
+.seg-label input:focus {
+  box-shadow: 0 0 6px rgba(234, 134, 170, 0.5);
+}
+
+
+#fileInput {
+  display: none;
+}
+
+
+
+
+
+/* 每週紀錄 */
+
+
+:root{
+    --accent-pink: #EA86AA;
+    --accent-yellow: #EADE81;
+    --text-dark: #333;
+    --muted: #666;
+    --card-bg: rgba(255,255,255,0.2);
+    --card-border: rgba(255,255,255,0.3);
+  }
+  
+  /* 區塊 */
+  .weekly-section{
+    padding: 120px 20px 220px;          
+    background: #f4f4f4;
+    
+  }
+  
+  .weekly-title{
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 6px;                
+    margin-bottom: 28px;
+    padding-bottom: 80px;
+    padding-top: 30px;
+    color: #333;
+    filter: blur(6px);
+    opacity: 0;
+    transition: filter 1.2s ease, opacity 1.2s ease;
+  }
+  .weekly-title.active{ filter: blur(0); opacity: 1; }
+  
+  .weekly-wave-container{ position: relative; }
+  .weekly-content{ width: 100%; max-width: 1280px; margin: 0 auto; }
+  
+  /* Grid：放大卡片 */
+  .week-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(280px, 1fr)); /* 大卡片 */
+    gap: 24px;
+    align-items: start;
+  }
+  
+  /* ≥1440 顯示 4 欄 */
+  @media (min-width: 1440px){
+    .week-grid{ grid-template-columns: repeat(4, minmax(280px, 1fr)); }
+  }
+  /* ≤1024 顯示 3 欄（預設） */
+  /* ≤860 顯示 2 欄 */
+  @media (max-width: 860px){
+    .week-grid{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+  }
+  /* ≤520 顯示 1 欄 */
+  @media (max-width: 520px){
+    .week-grid{ grid-template-columns: 1fr; }
+  }
+  
+  /* 卡片：毛玻璃質感 */
+  .day-card{
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 16px 16px 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transform: translateY(0) scale(1);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .day-card:hover{
+    transform: translateY(-6px) scale(1.03); /* 往上移 + 微放大 */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.18); 
+  }
+  
+  .day-title{
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: .5px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: #333;
+  }
+  
+  /* 圖片加大 */
+  .day-img{
+    width: 100%;
+    height: 240px;                 
+    object-fit: cover;
+    border-radius: 12px;
+    background-color: #e9eef3;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06) inset;
+  }
+  
+  /* 情緒條 */
+  .emotion-bar{ margin-bottom: 14px; }
+  
+  .label-row{
+    display: flex;
+    justify-content: space-between;
+    font-size: .85rem;
+    color: #555;
+    margin-bottom: 6px;
+  }
+  
+  .line-bar{
+    position: relative;
+    height: 16px;                 
+  }
+  
+  .line{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #ccc;
+    transform: translateY(-50%);
+  }
+  
+  /* dot 與動畫（保持一模一樣） */
+  .dot{
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background: #ff9a9e;        
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    transition: left .5s ease;    
+  }
+  
+  /* 細節強化：焦點可視化（鍵盤操作時） */
+  .dot:focus-visible{
+    outline: 2px solid var(--accent-yellow);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(234,222,129,.35);
+  }
+  
+  
+  .day-title,
+  .weekly-section p{
+    filter: blur(6px);
+    opacity: 0;
+    transition: filter 1.2s ease, opacity 1.2s ease;
+    color: #191919;
+  }
+  .day-title.active,
+  .weekly-section p.active{
+    filter: blur(0);
+    opacity: 1;
+  }
+
+  
+  
+
+  /* Footer */
+.footer {
+    background: #EA86AA;
+    width: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    color: #fff;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+ 
+  
+  /* 響應式 */
+  @media screen and (max-width: 768px) {
+    .footer-logo {
+      font-size: 1rem;
+    }
+    .footer-team, .footer-exhibit {
+      font-size: 0.85rem;
+    }
+    .footer-bottom {
+      font-size: 0.75rem;
+    }
+  }
+  
+
+
+  

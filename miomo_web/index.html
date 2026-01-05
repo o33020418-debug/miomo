@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MIOMO 首頁</title>
+ <link rel="stylesheet" type="text/css" href="Otherfiles/index.css">
+</head>
+<body>
+  
+   <div class="wave-layer">
+    <canvas id="wave" width="1500" height="230"></canvas>
+  </div>
+  
+  
+  <!-- 導覽列 -->
+  <header>
+    <div class="logo">
+        <a href="#hero">
+       <img src="image/logo@300x-8.png" alt="logo">
+    </a>
+    </div>
+    
+    <nav>
+      <a href="index.html">首 頁</a>
+      <a href="#about">關於MIOMO</a>
+      <a href="#sound-map">聲音紀錄</a>
+       <a href="Otherfiles/page2.html">聲音分析</a>
+      <a href="Otherfiles/page2.html">每周紀錄</a>
+    </nav>
+  </header>
+
+  <!-- 首頁封面 -->
+  <section class="hero" id="hero">
+   <!-- <div class="hero-text">MIOMOOOOOOO</div> --> 
+  </section>
+
+  <!-- 關於 MIOMO -->
+  <section class="about" id="about">
+    <h6 class="about-title">關 於 M I O M O。</h6>
+<div class="about-wave-container" onclick="createWave(event)">
+    <div class="about-content">
+      
+      <div class="image-wrapper">
+        
+        <div class="image-mask">
+          <img src="image/indexbg-02.png" alt="背景圖">
+         
+          
+        </div>
+       <img class="product-image" src="image/LINE_ALBUM_裝置.png" alt="產品圖">
+      </div>
+      
+     <!-- 左邊兩組 -->
+        <div class="line-text-container left1">
+          <div class="line"></div>
+          <div class="line-text">一按即錄，方便攜帶</div>
+        </div>
+        <div class="line-text-container left2">
+          <div class="line"></div>
+          <div class="line-text">連結個人與環境感知</div>
+        </div>
+
+        <!-- 右邊兩組 -->
+        <div class="line-text-container right1">
+          <div class="line"></div>
+          <div class="line-text">專屬圖像聲音記錄裝置</div>
+        </div>
+        <div class="line-text-container right2">
+          <div class="line"></div>
+          <div class="line-text">保存值得紀念的當下</div>
+        </div>
+      </div>
+  
+      
+     <p style="padding-top:40px; font-size: 20px;">M I O M O 是 一 款能 「 看 見 你 的 一 天 」 的 聲 音 記 錄 裝 置 。</p>
+
+      <p class="about-description">
+      
+        我們發現當代城市生活節奏快速，日常中的車聲、人聲與廣播等聲音常被忽略。
+        然而，這些聲音其實承載著<b>情感與記憶</b>，是連結個人與環境的重要感知。
+透過錄下生活中的環境聲，從大眾運輸的喧囂到辦公室的寧靜，我們將這些聲音轉化為專屬的動態圖像，讓每段日常，<b>都能被看見、被感受。</b>
+      </p>
+    </div>
+
+    <!-- 下方 SCROLL 雙箭頭 -->
+    <div class="scroll-down-btn" onclick="document.getElementById('next-section').scrollIntoView({ behavior: 'smooth' });">
+      <span class="scroll-text">SCROLL</span>
+      <span class="arrow"></span>
+      <span class="arrow second"></span>
+    </div>
+ 
+   
+  </section>
+    
+<section class="card-page">
+  <div class="card-slider-container">
+    <div class="card-slider-item"><img src="image/01.JPG" alt="Card 1"></div>
+    <div class="card-slider-item"><img src="image/02.JPG" alt="Card 2"></div>
+    <div class="card-slider-item"><img src="image/03.JPG" alt="Card 3"></div>
+   <div class="card-slider-item"><img src="image/04.JPG" alt="Card 4"></div>
+    <div class="card-slider-item"><img src="image/01.JPG" alt="Card 5"></div>
+     <div class="card-slider-item"><img src="image/02.JPG" alt="Card 6"></div>
+     
+  </div>
+</section>
+  
+    
+    
+ <!-- 聲音地圖區塊 -->
+<section class="sound-map-section" id="sound-map">
+  <h6 class="sound-map-title">聲 音 地 圖 ， 紀 錄 一 天 的 生 活 。</h6>
+   <p class="">
+        MIOMO讓使用者可以每天查看自己的聲音地圖，理解自己無意識中受到環境影響的情緒變化。
+      </p>
+     <p>這是一種<b>感知環境 × 內在情緒</b>的對話方式。
+      </p>
+  <div class="card-grid">
+    <!-- 卡片 1 -->
+    <div class="e-card playing">
+      <div class="card-header">  .</div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="cardtitle">聲音即時記錄</div>
+      <div class="infotop">
+        <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FFFFFF"><path d="M313.82 0Q301 0 292.5-8.68q-8.5-8.67-8.5-21.5 0-12.82 8.68-21.32 8.67-8.5 21.5-8.5 12.82 0 21.32 8.68 8.5 8.67 8.5 21.5Q344-17 335.32-8.5 326.65 0 313.82 0ZM480 0q-12.33 0-20.66-9Q451-18 451-30t8.47-21q8.48-9 21-9Q493-60 502-51.32q9 8.67 9 21.5Q511-17 502.09-8.5 493.17 0 480 0Zm166.82 0Q634 0 625.5-8.68q-8.5-8.67-8.5-21.5 0-12.82 8.68-21.32 8.67-8.5 21.5-8.5 12.82 0 21.32 8.68 8.5 8.67 8.5 21.5Q677-17 668.32-8.5 659.65 0 646.82 0ZM480-423q-43 0-72-30.92-29-30.91-29-75.08v-251q0-41.67 29.44-70.83Q437.88-880 479.94-880t71.56 29.17Q581-821.67 581-780v251q0 44.17-29 75.08Q523-423 480-423Zm0-228Zm-30 531v-136q-106-11-178-89t-72-184h60q0 91 64.29 153t155.5 62q91.21 0 155.71-62Q700-438 700-529h60q0 106-72 184t-178 89v136h-60Zm30-363q18 0 29.5-13.5T521-529v-251q0-17-11.79-28.5T480-820q-17.42 0-29.21 11.5T439-780v251q0 19 11.5 32.5T480-483Z"/></svg>
+          <path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <div class="name">使用者可透過我們的聲音裝置進行簡易記錄。裝置採「一鍵按壓」操作。</div>
+      </div>
+    </div>
+    <!-- 卡片 2 -->
+    <div class="e-card playing">
+      <div class="card-header">  .</div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="cardtitle">每日聲音地圖回饋</div>
+      <div class="infotop">
+    
+          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FFFFFF"><path d="m612-120-263-93-179 71q-17 9-33.5-1T120-173v-558q0-13 7.5-23t19.5-15l202-71 263 92 178-71q17-8 33.5 1.5T840-788v565q0 11-7.5 19T814-192l-202 72Zm-34-75v-505l-196-66v505l196 66Zm60 0 142-47v-512l-142 54v505Zm-458-12 142-54v-505l-142 47v512Zm458-493v505-505Zm-316-66v505-505Z"/></svg>
+        
+          
+          
+          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10
+              10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8
+              s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+        </svg>
+        <div class="name">完成當日圖形後，AI 將分析整體情緒趨勢，給出日常心情回饋。</div>
+      </div>
+    </div>
+    <!-- 卡片 3 -->
+    <div class="e-card playing">
+      <div class="card-header">  .</div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+      <div class="wave"></div>
+        <div class="cardtitle">情緒照護與創作互動</div>
+      <div class="infotop">
+       <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FFFFFF"><path d="M160-120v-128l571-571q11-11 22.5-16t24.5-5q12 0 23.5 5t22.5 16l35 35q11 10 16 21.5t5 24.5q0 12-5 24t-16 23L288-120H160Zm60-60h44l446-446-22-22-22-22-446 446v44Zm601-557-44-44 44 44Zm-133 89-22-22 44 44-22-22ZM560-120q78 0 139-36.5T760-260q0-40-29.5-73.5T638-386l-47 47q50 12 79.5 34t29.5 45q0 32-40.5 56T560-180q-12 0-21 8.5t-9 21.5q0 12 9 21t21 9ZM240-414l48-48q-54-13-81-27.5T180-520q0-16 21.5-30.5T290-590q83-31 111.5-59.5T430-719q0-56-41-88.5T280-840q-42 0-76 14.5T153-789q-8 9-7.5 21t11.5 20q10 8 22.5 6.5T200-751q15-15 34-22t46-7q46 0 68 18t22 43q0 20-19 35t-85 39q-94 34-120 62t-26 63q0 32 28 62t92 44Z"/></svg>
+          <path fill="currentColor" d="M9 2v2H7v2H5v2H3v2h2v2h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h-2v-2h-2V8h-2V6h-2V4h-2V2H9z"/>
+        </svg>
+        <div class="name">提供創作平台，使用者可透過自己的「聲音圖形」進行創作。</div>
+      </div>
+    </div>
+  </div>
+  <div class="record-button-wrapper">
+  <button class="record-button" onclick="location.href='Otherfiles/page2.html'">開啟你的聲音旅程</button>
+</div>
+  
+  
+</section>
+
+<section class="footer">
+    
+    <div class="footer-container">雲林科技大學數位媒體設計系 &nbsp;|&nbsp; 畢業專題製作 MIOMO</div>
+    <div class="footer-container">專題組員：葉俊沅 / 蘇筱瑩 &nbsp;|&nbsp; 指導老師：盧麗淑 / 許志維</div>
+      <div class="footer-container">參展區域：國林雲林科技大學校內展 &nbsp;|&nbsp; 台北新一代南港展覽館 &nbsp;|&nbsp; 高雄展覽館放視藝能大賞</div>
+  
+</section>
+
+
+
+<script src="Otherfiles/index.js"></script>
+
+
+</body>
+</html>
