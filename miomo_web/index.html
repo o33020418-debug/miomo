@@ -7,7 +7,7 @@
  <link rel="stylesheet" type="text/css" href="Otherfiles/index.css">
 </head>
 <body>
-  
+  <button id="backToTop" aria-label="回到頂端">↑</button>
    <div class="wave-layer">
     <canvas id="wave" width="1500" height="230"></canvas>
   </div>
@@ -30,10 +30,25 @@
     </nav>
   </header>
 
-  <!-- 首頁封面 -->
-  <section class="hero" id="hero">
-   <!-- <div class="hero-text">MIOMOOOOOOO</div> --> 
+
+
+
+  
+ <!-- 首頁封面 -->
+<section class="hero hero--fixed" id="hero">
+  <div class="video-background">
+    <video autoplay loop playsinline class="hero-video" preload="auto">
+      <source src="image/788338463.135561.mp4" type="video/mp4">
+      <p>您的瀏覽器不支援 HTML5 影片標籤。</p>
+    </video>
+  </div>
+
+</section>
+
+
   </section>
+
+    <div class="hero-spacer" aria-hidden="true"></div>
 
   <!-- 關於 MIOMO -->
   <section class="about" id="about">
@@ -93,7 +108,7 @@
    
   </section>
     
-<section class="card-page">
+<section class="card-page "id="next-section">
   <div class="card-slider-container">
     <div class="card-slider-item"><img src="image/01.JPG" alt="Card 1"></div>
     <div class="card-slider-item"><img src="image/02.JPG" alt="Card 2"></div>
@@ -103,6 +118,11 @@
      <div class="card-slider-item"><img src="image/02.JPG" alt="Card 6"></div>
      
   </div>
+
+  <div class="card-hint" aria-hidden="true">
+  <span class="card-hint-bubble">滑鼠移入！</span>
+</div>
+
 </section>
   
     
