@@ -1,316 +1,354 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MIOMO 首頁</title>
-  <link rel="stylesheet" type="text/css" href="page2.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MIOMO 首頁</title>
+<link href="page2.css" rel="stylesheet" type="text/css"/>
 </head>
+
 <body>
-
-  <!-- 導覽列 -->
-  <header>
-    <div class="logo">
-        <a href="../index.html" >
-       <img src="../image/logo@300x-8.png" alt="logo">
-    </a>
-    </div>
-     
-   <nav>
-  <a href="../index.html">首 頁</a>
-  <a href="../index.html">關於MIOMO</a>
-  <a href="../index.html">聲音紀錄</a>
-  <a href="#">聲音分析</a>
-  <a href="#">每週紀錄</a>
-</nav>
-  </header>
-
-  <!-- 上傳聲音頁面 -->
-<section class="upload-page" id="upload">
-  <div class="upload-header">
-    <canvas id="wave" width="600" height="150"></canvas>
-    <h2 class="upload-title">在 此 上 傳 你 的 聲 音</h2>
-  </div>
-
-
-  <form id="uploadForm" class="upload-dropzone">
-    
-    
-  <p class="upload-description">
-    將錄製的音檔上傳，我們將協助分析與記錄。
-  <br>支持 MP3 / WAV 格式。</br>
-  </p>
-    <div class="buttons">
-  <label class="custom-file-upload">
-    
-    <span>上傳檔案</span>
-    <input type="file" id="fileInput">
-  </label>
-  <button id="analyzeBtn" type="button">分析聲音</button>
-</div>
-
-
-   
-    
-  </form>
-
   
+  <button id="backToTop" aria-label="回到頂端">↑</button>
+<!-- 導覽列 -->
+<header>
+<div class="logo">
+<a href="../index.html">
+<img alt="logo" src="../image/logo@300x-8.png"/>
+</a>
+</div>
+<nav>
+
+<a href="../index.html">關於MIOMO</a>
+<a href="../index.html">聲音紀錄</a>
+<a href="#upload">聲音分析</a>
+<a href="#weekly">每週紀錄</a>
+</nav>
+</header>
+
+<!-- ===============================
+     Floating Music Control
+================================ -->
+<button id="musicToggle" aria-label="背景音樂控制">
+  <span class="music-icon">
+    <span class="speaker-body"></span>
+    <span class="sound-wave w1"></span>
+    <span class="sound-wave w2"></span>
+  </span>
+</button>
+
+<audio id="bgm" loop preload="auto">
+  <source src="../Main-version.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 上傳聲音頁面 -->
+<section class="upload-page" id="upload">
+<div class="upload-header">
+<canvas height="150" id="wave" width="600"></canvas>
+<h2 class="upload-title">在 此 上 傳 你 的 聲 音</h2>
+</div>
+<form class="upload-dropzone" id="uploadForm">
+<p class="upload-description">
+    將錄製的音檔上傳，我們將協助分析與記錄。
+  <br/>支持 MP3 / WAV 格式。
+  </p>
+<div class="buttons">
+<label class="custom-file-upload">
+<span>上傳檔案</span>
+<input id="fileInput" type="file"/>
+</label>
+<button id="analyzeBtn" type="button">分析聲音</button>
+</div>
+</form>
 </section>
 <!-- 聲音分析區 -->
-<div class="container">
+<div class="container" id="today">
+<!-- 左側 -->
+<div class="left-panel">
+<h2>今日聲音地圖</h2>
+<div class="unity-image">
+<canvas height="800" id="canvas" width="800"></canvas>
 
-  <!-- 左側 -->
-  <div class="left-panel">
+<div class="map-empty" id="mapEmpty" aria-label="尚未生成今日聲音地圖">
+  <button class="dash-action" id="goUploadFromMap" type="button">請上傳聲音分析</button>
+  <div class="map-empty-hint">上傳並分析後，今日聲音地圖會在這裡生成</div>
+</div>
+</div>
 
-    <h2>今日聲音地圖</h2>
+<!-- ===============================
+     Upload Audio Playback (ADD ONLY)
+     回播當前上傳音檔
+================================ -->
+<div class="audio-playback-panel" id="audioPlaybackPanel" aria-label="音檔回播">
+  <div class="audio-playback-list" id="audioPlaybackList">
+    <div class="audio-playback-empty" id="audioPlaybackEmpty">尚未上傳音檔</div>
+  </div>
+</div>
 
-    <div class="unity-image">
-      <canvas id="canvas" width="800" height="800"></canvas>
-  
-    </div>
 <pre id="log" style="display: none;">尚未分析</pre>
 
-    <!-- 情緒條放在左側 Panel 內 -->
-    <div class="emotion-bar">
-      <div class="label-row"><span>激動</span><span>安心</span></div>
-      <div class="line-bar">
-        <div class="line"></div>
-        <div class="dot" id="dot1" style="left:50%;"></div>
-      </div>
-    </div>
-
-
-    
-    <div class="emotion-bar">
-      <div class="label-row"><span>清醒</span><span>混亂</span></div>
-      <div class="line-bar">
-        <div class="line"></div>
-        <div class="dot" id="dot2" style="left:50%;"></div>
-      </div>
-    </div>
-
-    <div class="emotion-bar">
-      <div class="label-row"><span>滿足</span><span>渴望</span></div>
-      <div class="line-bar">
-        <div class="line"></div>
-        <div class="dot" id="dot3" style="left:50%;"></div>
-      </div>
-    </div>
-
-    <div class="emotion-bar">
-      <div class="label-row"><span>高亢</span><span>低落</span></div>
-      <div class="line-bar">
-        <div class="line"></div>
-        <div class="dot" id="dot4" style="left:50%;"></div>
-      </div>
-    </div>
-
-    <div class="emotion-bar">
-      <div class="label-row"><span>均衡</span><span>極端</span></div>
-      <div class="line-bar">
-        <div class="line"></div>
-        <div class="dot" id="dot5" style="left:50%;"></div>
-      </div>
-    </div>
-
-  </div>
-
-
-    <!-- 右側 -->
-    <div class="right-panel">
-      <h2>情緒分析</h2>
-
-      <div class="analysis-card">
-        <div class="emotion-title">激動 / 安心</div>
-        <div class="big-bar-container">
-          <div class="big-bar-fill" id="bigbar1"></div>
-          <div class="percentage-tooltip" id="tooltip1">0%</div>
-        </div>
-        <div class="analysis-text">當你的能量條偏向激動，代表此刻你的聲音充滿熱情、緊張或興奮感；
+</div>
+<!-- 右側 -->
+<div class="right-panel">
+<h2>情緒分析</h2>
+<div class="analysis-grid" id="analysisGrid">
+<div class="analysis-card">
+<div class="emotion-title">激動 / 安心</div>
+<div class="big-bar-container">
+<div class="big-bar-fill" id="bigbar1"></div>
+<div class="percentage-tooltip" id="tooltip1">0%</div>
+</div>
+<div class="analysis-text">當你的能量條偏向激動，代表此刻你的聲音充滿熱情、緊張或興奮感；
 如果偏向安心，情緒則平穩、放鬆，像是在舒適環境中自在呼吸。</div>
-      </div>
-
-      <div class="analysis-card">
-        <div class="emotion-title">清醒 / 混亂</div>
-        <div class="big-bar-container">
-          <div class="big-bar-fill" id="bigbar2"></div>
-          <div class="percentage-tooltip" id="tooltip2">0%</div>
-        </div>
-        <div class="analysis-text">偏向清醒表示頭腦清晰、思路有條理，聲音穩定而有方向感；
+</div>
+<div class="analysis-card">
+<div class="emotion-title">清醒 / 混亂</div>
+<div class="big-bar-container">
+<div class="big-bar-fill" id="bigbar2"></div>
+<div class="percentage-tooltip" id="tooltip2">0%</div>
+</div>
+<div class="analysis-text">偏向清醒表示頭腦清晰、思路有條理，聲音穩定而有方向感；
 偏向混亂則可能語速不穩、思緒凌亂，感覺有些迷茫或焦躁。</div>
-      </div>
-
-      <div class="analysis-card">
-        <div class="emotion-title">滿足 / 渴望</div>
-        <div class="big-bar-container">
-          <div class="big-bar-fill" id="bigbar3"></div>
-          <div class="percentage-tooltip" id="tooltip3">0%</div>
-        </div>
-        <div class="analysis-text">偏向滿足時，聲音溫暖、柔和，帶有成就感或幸福感；
+</div>
+<div class="analysis-card">
+<div class="emotion-title">滿足 / 渴望</div>
+<div class="big-bar-container">
+<div class="big-bar-fill" id="bigbar3"></div>
+<div class="percentage-tooltip" id="tooltip3">0%</div>
+</div>
+<div class="analysis-text">偏向滿足時，聲音溫暖、柔和，帶有成就感或幸福感；
 偏向渴望則有期待、追求感，聲音中帶有一絲急切或不安。</div>
-      </div>
-
-      <div class="analysis-card">
-        <div class="emotion-title">高亢 / 低落</div>
-        <div class="big-bar-container">
-          <div class="big-bar-fill" id="bigbar4"></div>
-          <div class="percentage-tooltip" id="tooltip4">0%</div>
-        </div>
-        <div class="analysis-text">偏向高亢表示情緒昂揚、充滿力量，聲音響亮而有衝擊力；
+</div>
+<div class="analysis-card">
+<div class="emotion-title">高亢 / 低落</div>
+<div class="big-bar-container">
+<div class="big-bar-fill" id="bigbar4"></div>
+<div class="percentage-tooltip" id="tooltip4">0%</div>
+</div>
+<div class="analysis-text">偏向高亢表示情緒昂揚、充滿力量，聲音響亮而有衝擊力；
 偏向低落則帶有沉重、低沉的感覺，像心情稍微收起來。</div>
-      </div>
+</div>
+<div class="analysis-card">
+<div class="emotion-title">均衡 / 極端</div>
+<div class="big-bar-container">
+<div class="big-bar-fill" id="bigbar5"></div>
+<div class="percentage-tooltip" id="tooltip5">0%</div>
+</div>
+<div class="analysis-text">偏向均衡代表情緒穩定、聲音自然，沒有大起大落； 偏向極端則可能劇烈波動，聲音表現強烈的快樂、悲傷或激動感。</div>
+</div>
+</div>
 
-      <div class="analysis-card">
-        <div class="emotion-title">均衡 / 極端</div>
-        <div class="big-bar-container">
-          <div class="big-bar-fill" id="bigbar5"></div>
-          <div class="percentage-tooltip" id="tooltip5">0%</div>
+<div class="dotbar-area" id="dotbarArea" aria-label="能量條" style="display:none;">
+  <div class="emotion-bar">
+    <div class="label-row"><span>激動</span><span>安心</span></div>
+    <div class="line-bar"><div class="line"></div><div class="dot" id="dot1" style="left:50%;"></div></div>
+  </div>
+  <div class="emotion-bar">
+    <div class="label-row"><span>清醒</span><span>混亂</span></div>
+    <div class="line-bar"><div class="line"></div><div class="dot" id="dot2" style="left:50%;"></div></div>
+  </div>
+  <div class="emotion-bar">
+    <div class="label-row"><span>滿足</span><span>渴望</span></div>
+    <div class="line-bar"><div class="line"></div><div class="dot" id="dot3" style="left:50%;"></div></div>
+  </div>
+  <div class="emotion-bar">
+    <div class="label-row"><span>高亢</span><span>低落</span></div>
+    <div class="line-bar"><div class="line"></div><div class="dot" id="dot4" style="left:50%;"></div></div>
+  </div>
+  <div class="emotion-bar">
+    <div class="label-row"><span>均衡</span><span>極端</span></div>
+    <div class="line-bar"><div class="line"></div><div class="dot" id="dot5" style="left:50%;"></div></div>
+  </div>
+</div>
+
+<div class="buttons">
+<button id="saveBtn">儲存本日分析</button>
+<button id="weeklyBtn">查看每週紀錄</button>
+<button id="monthlyBtn">查看本月回顧</button></div>
+</div>
+</div>
+<!-- 每週紀錄 -->
+<section class="weekly-section" id="weekly">
+<h6 class="weekly-title active">每 週 紀 錄。</h6>
+
+<div class="weekly-wave-container" onclick="createWave(event)">
+<div class="weekly-content">
+<div class="weekly-empty" id="weeklyEmpty" aria-label="每週紀錄空狀態">
+  <button class="dash-action" id="goTodayFromWeekly" type="button">還未紀錄任何聲音地圖</button>
+  <div class="weekly-empty-hint">先到「今日聲音地圖」完成分析並儲存，每週紀錄會在此逐一累積。</div>
+</div>
+
+<div class="week-grid">
+<!-- 禮拜一 -->
+<div class="day-card">
+<div class="day-title">Mon</div>
+<img class="day-img" id="day1" src="image/default.png"/>
+<div class="emotion-bar">
+<div class="label-row"><span>專注</span><span>分心</span></div>
+<div class="line-bar">
+<div class="line"></div>
+<div class="dot" id="dot1-1" style="left: 50%;"></div>
+</div>
+</div>
+<div class="emotion-bar">
+<div class="label-row"><span>清醒</span><span>混亂</span></div>
+<div class="line-bar">
+<div class="line"></div>
+<div class="dot" id="dot1-2" style="left: 50%;"></div>
+</div>
+</div>
+<div class="emotion-bar">
+<div class="label-row"><span>滿足</span><span>渴望</span></div>
+<div class="line-bar">
+<div class="line"></div>
+<div class="dot" id="dot1-3" style="left: 50%;"></div>
+</div>
+</div>
+<div class="emotion-bar">
+<div class="label-row"><span>高亢</span><span>低落</span></div>
+<div class="line-bar">
+<div class="line"></div>
+<div class="dot" id="dot1-4" style="left: 50%;"></div>
+</div>
+</div>
+<div class="emotion-bar">
+<div class="label-row"><span>均衡</span><span>極端</span></div>
+<div class="line-bar">
+<div class="line"></div>
+<div class="dot" id="dot1-5" style="left: 50%;"></div>
+</div>
+</div>
+</div>
+<!-- 禮拜二 -->
+<div class="day-card">
+<div class="day-title">Tue</div>
+<img class="day-img" id="day2" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-5" style="left: 50%;"></div></div></div>
+</div>
+<!-- 禮拜三 -->
+<div class="day-card">
+<div class="day-title">Wed</div>
+<img class="day-img" id="day3" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-5" style="left: 50%;"></div></div></div>
+</div>
+<!-- 禮拜四 -->
+<div class="day-card">
+<div class="day-title">Thu</div>
+<img class="day-img" id="day4" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-5" style="left: 50%;"></div></div></div>
+</div>
+<!-- 禮拜五 -->
+<div class="day-card">
+<div class="day-title">Fri</div>
+<img class="day-img" id="day5" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-5" style="left: 50%;"></div></div></div>
+</div>
+<!-- 禮拜六 -->
+<div class="day-card">
+<div class="day-title">Sat</div>
+<img class="day-img" id="day6" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-5" style="left: 50%;"></div></div></div>
+</div>
+<!-- 禮拜七-->
+<div class="day-card">
+<div class="day-title">Sun</div>
+<img class="day-img" id="day7" src="image/default.png"/>
+<div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-1" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-2" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-3" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-4" style="left: 50%;"></div></div></div>
+<div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-5" style="left: 50%;"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="weekly-actions buttons" id="weeklyActions" style="display:none;">
+  <button id="monthlyBtnWeekly" type="button">查看本月回顧</button>
+</div>
+</section><section class="monthly-section" id="monthly">
+  <div class="monthly-title">Monthly Review</div>
+  <div class="monthly-sub">本月的每日聲音地圖總覽</div>
+
+  <!-- 未生成時顯示 -->
+  <div class="monthly-empty" id="monthlyEmpty" aria-label="本月回顧空狀態" style="display:none;">
+    <button class="dash-action" id="monthlyEmptyBtn" type="button">還未儲存每日分析</button>
+    <div class="monthly-empty-hint">先在「今日聲音地圖」按「儲存本日分析」，或到「每週紀錄」確認是否已有累積。</div>
+  </div>
+
+  <!-- 有資料時才顯示 -->
+  <div class="monthly-canvas-wrap" id="monthlyCanvasWrap">
+    <div class="monthly-frame" id="monthlyFrame">
+      <div class="monthly-frame-border" aria-hidden="true"></div>
+
+      <!-- 頂部logo -->
+      <div class="monthly-top" id="monthlyTop" aria-label="本月回顧操作區">
+        <img id="monthlyLogoOverlay" class="monthly-logo" alt="logo" src="../image/logo@300x-8.png"/>
+        <div class="monthly-toolbar buttons" id="monthlyToolbar" style="display:none;">
+          <button id="monthlyUndoBtn" type="button">回到上一步</button>
+          <button id="monthlyDrawBtn" type="button"><span class="btn-label">繪製</span></button>
+          <button id="monthlySaveBtn" type="button">保存</button>
         </div>
-        <div class="analysis-text">偏向均衡代表情緒穩定、聲音自然，沒有大起大落； 偏向極端則可能劇烈波動，聲音表現強烈的快樂、悲傷或激動感。</div>
+        <div class="monthly-draw-hint" id="monthlyDrawHint" style="display:none;">繪製模式已開啟：在畫布上按住滑鼠左鍵拖曳即可畫線</div>
       </div>
 
-      <div class="buttons">
-        <button>儲存本日分析</button>
-        <button>查看每週紀錄</button>
+      
+      <div class="monthly-stage" id="monthlyStage" aria-label="本月回顧畫布區">
+        <canvas height="620" id="monthlyCanvas" width="620"></canvas>
+        <canvas height="620" id="monthlyDrawCanvas" width="620" aria-label="本月回顧繪製層"></canvas>
       </div>
+
+      
+      <div class="monthly-diary" id="monthlyDiary" style="display:none;">
+        <button class="monthly-diary-toggle" id="monthlyDiaryToggle" type="button" aria-expanded="false">
+          <span class="prompt-default">MIOMO好像想到告訴你什麼…？</span>
+          <span class="prompt-hover">點按查看你的情緒日記！</span>
+          <span class="prompt-icon" aria-hidden="true"></span>
+        </button>
+
+        <div class="monthly-diary-panel" id="monthlyDiaryPanel" aria-hidden="true">
+          <div class="monthly-diary-frame">
+            <div class="analysis-card monthly-story-card" id="monthlyStoryCard">
+              <div class="emotion-title" id="monthlyStoryTitle">本 月 小 回 饋</div>
+              <div class="analysis-text" id="monthlyStoryText"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- 每週紀錄 -->
-  
-<section class="weekly-section" id="weekly">
-    <h6 class="weekly-title active">每 週 紀 錄。</h6>
-  
-    <div class="weekly-wave-container" onclick="createWave(event)">
-      <div class="weekly-content">
-        <div class="week-grid">
-  
-          <!-- 禮拜一 -->
-          <div class="day-card">
-            <div class="day-title">Mon</div>
-            <img class="day-img" id="day1" src="image/default.png">
-            <div class="emotion-bar">
-              <div class="label-row"><span>專注</span><span>分心</span></div>
-              <div class="line-bar">
-                <div class="line"></div>
-                <div class="dot" id="dot1-1" style="left: 50%;"></div>
-              </div>
-            </div>
-            <div class="emotion-bar">
-              <div class="label-row"><span>清醒</span><span>混亂</span></div>
-              <div class="line-bar">
-                <div class="line"></div>
-                <div class="dot" id="dot1-2" style="left: 50%;"></div>
-              </div>
-            </div>
-            <div class="emotion-bar">
-              <div class="label-row"><span>滿足</span><span>渴望</span></div>
-              <div class="line-bar">
-                <div class="line"></div>
-                <div class="dot" id="dot1-3" style="left: 50%;"></div>
-              </div>
-            </div>
-            <div class="emotion-bar">
-              <div class="label-row"><span>高亢</span><span>低落</span></div>
-              <div class="line-bar">
-                <div class="line"></div>
-                <div class="dot" id="dot1-4" style="left: 50%;"></div>
-              </div>
-            </div>
-            <div class="emotion-bar">
-              <div class="label-row"><span>均衡</span><span>極端</span></div>
-              <div class="line-bar">
-                <div class="line"></div>
-                <div class="dot" id="dot1-5" style="left: 50%;"></div>
-              </div>
-            </div>
-          </div>
-  
-          <!-- 禮拜二 -->
-          <div class="day-card">
-            <div class="day-title">Tue</div>
-            <img class="day-img" id="day2" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot2-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-          <!-- 禮拜三 -->
-          <div class="day-card">
-            <div class="day-title">Wed</div>
-            <img class="day-img" id="day3" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot3-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-          <!-- 禮拜四 -->
-          <div class="day-card">
-            <div class="day-title">Thu</div>
-            <img class="day-img" id="day4" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot4-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-          <!-- 禮拜五 -->
-          <div class="day-card">
-            <div class="day-title">Fri</div>
-            <img class="day-img" id="day5" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot5-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-          <!-- 禮拜六 -->
-          <div class="day-card">
-            <div class="day-title">Sat</div>
-            <img class="day-img" id="day6" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot6-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-          <!-- 禮拜七-->
-          <div class="day-card">
-            <div class="day-title">Sun</div>
-            <img class="day-img" id="day7" src="image/default.png">
-            <div class="emotion-bar"><div class="label-row"><span>專注</span><span>分心</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-1" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>清醒</span><span>混亂</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-2" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>滿足</span><span>渴望</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-3" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>高亢</span><span>低落</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-4" style="left: 50%;"></div></div></div>
-            <div class="emotion-bar"><div class="label-row"><span>均衡</span><span>極端</span></div><div class="line-bar"><div class="line"></div><div class="dot" id="dot7-5" style="left: 50%;"></div></div></div>
-          </div>
-  
-        </div>
-      </div>
-    </div>
-  </section>
-
- <!-- 頁尾 -->
-
- <section class="footer">
-    
-      <div class="footer-container">雲林科技大學數位媒體設計系 &nbsp;|&nbsp; 畢業專題製作 MIOMO</div>
-      <div class="footer-container">專題組員：葉俊沅 / 蘇筱瑩 &nbsp;|&nbsp; 指導老師：盧麗淑 / 許志維</div>
-        <div class="footer-container">參展區域：國林雲林科技大學校內展 &nbsp;|&nbsp; 台北新一代南港展覽館 &nbsp;|&nbsp; 高雄展覽館放視藝能大賞</div>
-    
-  </section>
-  
-
-
-  <script src="page2.js"></script>
-  
-
+  <div class="monthly-note" id="monthlyNote"></div>
+</section>
+<!-- 頁尾 -->
+<section class="footer">
+<div class="footer-container">雲林科技大學數位媒體設計系  |  畢業專題製作 MIOMO</div>
+<div class="footer-container">專題組員：葉俊沅 / 蘇筱瑩  |  指導老師：盧麗淑 / 許志維</div>
+<div class="footer-container">參展區域：國林雲林科技大學校內展  |  台北新一代南港展覽館  |  高雄展覽館放視藝能大賞</div>
+<div class="footer-container">music:https://zh.500audio.com/track/childhood-sea_23088</div>
+</section>
+<script src="page2.js"></script>
+<script src="miomov3.js"></script>
 </body>
 </html>
