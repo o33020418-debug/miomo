@@ -8,6 +8,8 @@
     font-family: "Arial", sans-serif;
     background-color: #f4f4f4;
     color: #fff;
+     overflow-x: hidden;
+     cursor: none;
   }
 
 /* 初始模糊透明 */
@@ -211,7 +213,7 @@ transition: background 0.3s;
 }
 
 .upload-button:hover {
-    background-color: #EADE81; /* 按鈕 */
+    background-color: #EADE81;
     color: #EA86AA;
 }
 
@@ -254,13 +256,13 @@ margin-bottom: 15px;
 }
 
 .unity-image {
-  width: 100%;      /* 容器寬度 */
-  height: 480px;    /* 容器高度 */
+  width: 100%;     
+  height: 480px;   
   background: #f6faff;
   border-radius: 12px;
   display: flex;
-  align-items: center;   /* 垂直置中 */
-  justify-content: center; /* 水平置中 */
+  align-items: center;   
+  justify-content: center; 
   font-size: 1.1em;
   margin-bottom: 20px;
   overflow: visible;
@@ -269,7 +271,7 @@ margin-bottom: 15px;
 .unity-image canvas {
   max-width: 100%;
   max-height: 100%;
-  display: block;  /* 去掉默認 inline 行為 */
+  display: block;  
 }
 
 
@@ -290,7 +292,7 @@ color: #555;
 /* 節點線容器 */
 .line-bar {
 position: relative;
-height: 16px; /* 調整點的垂直位置空間 */
+height: 16px; 
 }
 
 /* 細線 */
@@ -314,7 +316,7 @@ background: #ff9a9e;
 border-radius: 50%;
 transform: translate(-50%, -50%);
 box-shadow: 0 0 6px rgba(0,0,0,0.2);
-transition: left 0.5s ease; /* 位置動畫 */
+transition: left 0.5s ease; 
 }
 
   /* 右側 */
@@ -407,7 +409,7 @@ color: #333;
   color: #EA86AA;
   box-shadow: 0 6px 18px rgba(234, 222, 129, 0.4);
 }
-/* 輸入分段樣式（精簡版） */
+
 .seg-label {
   display: inline-flex;
   align-items: center;
@@ -416,19 +418,19 @@ color: #333;
   background-color: #EA86AA;
   color: #EADE81;
   border-radius: 9999px;
-  padding: 6px 14px; /* 原本 10px 22px → 改成更緊湊 */
+  padding: 6px 14px; 
   font-size: 0.95rem;
   font-weight: 500;
   box-shadow: 0 3px 6px rgba(0, 123, 255, 0.25);
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  height: 42px; /* 跟按鈕高度接近 */
+  height: 42px; 
 }
 
 
 /* 數字輸入框 */
 .seg-label input {
-  width: 55px; /* 縮短寬度 */
+  width: 55px; 
   border: none;
   border-radius: 9999px;
   padding: 4px;
@@ -467,7 +469,7 @@ color: #333;
   
   /* 區塊 */
   .weekly-section{
-    padding: 120px 20px 220px;          
+    padding: 120px 20px 100px;          
     background: #f4f4f4;
     
   }
@@ -489,10 +491,10 @@ color: #333;
   .weekly-wave-container{ position: relative; }
   .weekly-content{ width: 100%; max-width: 1280px; margin: 0 auto; }
   
-  /* Grid：放大卡片 */
+  /* 放大卡片 */
   .week-grid{
     display: grid;
-    grid-template-columns: repeat(3, minmax(280px, 1fr)); /* 大卡片 */
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 24px;
     align-items: start;
   }
@@ -501,7 +503,7 @@ color: #333;
   @media (min-width: 1440px){
     .week-grid{ grid-template-columns: repeat(4, minmax(280px, 1fr)); }
   }
-  /* ≤1024 顯示 3 欄（預設） */
+  /* ≤1024 顯示 3 欄 */
   /* ≤860 顯示 2 欄 */
   @media (max-width: 860px){
     .week-grid{ grid-template-columns: repeat(2, minmax(260px, 1fr)); }
@@ -511,7 +513,7 @@ color: #333;
     .week-grid{ grid-template-columns: 1fr; }
   }
   
-  /* 卡片：毛玻璃質感 */
+  /* 毛玻璃質感 */
   .day-card{
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -525,7 +527,7 @@ color: #333;
                 box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
   }
   .day-card:hover{
-    transform: translateY(-6px) scale(1.03); /* 往上移 + 微放大 */
+    transform: translateY(-6px) scale(1.03); 
     box-shadow: 0 20px 40px rgba(0,0,0,0.18); 
   }
   
@@ -575,7 +577,7 @@ color: #333;
     transform: translateY(-50%);
   }
   
-  /* dot 與動畫（保持一模一樣） */
+ 
   .dot{
     position: absolute;
     top: 50%;
@@ -588,7 +590,7 @@ color: #333;
     transition: left .5s ease;    
   }
   
-  /* 細節強化：焦點可視化（鍵盤操作時） */
+  /* 細節強化 */
   .dot:focus-visible{
     outline: 2px solid var(--accent-yellow);
     outline-offset: 2px;
@@ -645,7 +647,1319 @@ color: #333;
       font-size: 0.75rem;
     }
   }
-  
+
+/* =========================
+   Monthly Review（本月回顧）
+   ========================= */
+.monthly-section{
+  padding: 110px 20px 220px;
+  background: #f4f4f4;
+}
+
+.monthly-title{
+  font-size: 2rem;
+  text-align: center;
+  letter-spacing: 6px;
+  margin-bottom: 14px;
+  color: #191919;
+}
+
+.monthly-sub{
+  max-width: 920px;
+  margin: 0 auto 26px;
+  text-align: center;
+  color: #333;
+  letter-spacing: 1px;
+  line-height: 1.6;
+}
+
+.monthly-canvas-wrap{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#monthlyCanvas{
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+  background: transparent;
+}
+
+.monthly-note{
+  margin-top: 14px;
+  text-align: center;
+  color: #666;
+  font-size: 0.95rem;
+  letter-spacing: .5px;
+}
 
 
+
+
+
+/* =========================
+   Monthly Review：Frame + Draw + Story (ADD ONLY)
+========================= */
+
+.monthly-frame{
+  position: relative;
+  width: min(860px, 100%);
+  margin: 0 auto;
+  padding: 26px 26px 30px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.10);
+}
+
+.monthly-frame-border{
+  position: absolute;
+  inset: 12px;
+  border-radius: 22px;
+  border: 2px solid rgba(234, 134, 170, 0.95);
+  pointer-events: none;
+}
+
+.monthly-stage{
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.9);
+}
+
+
+.monthly-stage #monthlyCanvas,
+.monthly-stage #monthlyDrawCanvas{
+  max-width: none !important;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+#monthlyDrawCanvas{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  cursor: crosshair;
+}
+
+.monthly-toolbar{
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.monthly-draw-hint{
+  margin-top: 10px;
+  text-align: center;
+  color: rgba(25,25,25,0.65);
+  font-size: 0.92rem;
+  letter-spacing: .5px;
+}
+
+.monthly-story-card{
+  margin-top: 22px;
+}
+
+
+.monthly-story-card .emotion-title,
+.monthly-story-card .analysis-text{
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+
+
+
+
+
+/* =========================================================
+   MIOMO UI/UX Layout Patch Styles 
+========================================================= */
+
+
+.unity-image{
+  position: relative;
+  overflow: hidden; 
+}
+
+/* 今日聲音地圖 */
+.map-empty{
+  position: absolute;
+  inset: 14px;
+  border-radius: 14px;
+  border: 2px dashed rgba(25,25,25,0.28);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  z-index: 2;
+}
+
+.map-empty-hint{
+  font-size: .95rem;
+  line-height: 1.5;
+  color: rgba(25,25,25,0.65);
+  max-width: 340px;
+}
+
+/* 虛線框按鈕*/
+.dash-action{
+  appearance: none;
+  background: transparent;
+  border: 2px dashed rgba(234, 134, 170, 0.9);
+  color: rgba(234, 134, 170, 1);
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: transform .25s ease, background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+
+.dash-action:hover{
+  transform: translateY(-2px);
+  background: rgba(234, 134, 170, 0.06);
+  border-color: rgba(234, 134, 170, 1);
+}
+
+/* 右側情緒字卡Grid */
+.analysis-grid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 980px){
+  .analysis-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 右側 dotbar 區塊 */
+.dotbar-area{
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 18px 20px 6px;
+}
+
+/* 分析後右側 */
+.right-panel.is-awaiting-reveal .analysis-card,
+.right-panel.is-awaiting-reveal #dotbarArea{
+  opacity: 0;
+  transform: translateX(26px) scale(0.985);
+  pointer-events: none;
+}
+
+.right-panel.is-revealed .analysis-card,
+.right-panel.is-revealed #dotbarArea{
+  animation: miomoReveal .75s cubic-bezier(.2, 1.15, .2, 1) both;
+  pointer-events: auto;
+}
+
+@keyframes miomoReveal{
+  0%   { opacity: 0; transform: translateX(26px) scale(0.985); }
+  60%  { opacity: 1; transform: translateX(-6px) scale(1.01); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+
+.day-card{
+  display: none;
+}
+.day-card.is-visible{
+  display: block;
+}
+.day-card.week-reveal{
+  animation: miomoWeekPop .65s cubic-bezier(.2, 1.05, .2, 1) both;
+}
+@keyframes miomoWeekPop{
+  0%   { opacity: 0; transform: translateY(10px) scale(0.98); }
+  70%  { opacity: 1; transform: translateY(-4px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 每週紀錄空狀態 */
+.weekly-empty{
+  width: 100%;
+  max-width: 620px;
+  margin: 22px auto 8px;
+  padding: 26px 20px;
+  border-radius: 16px;
+  border: 2px dashed rgba(25,25,25,0.22);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.weekly-empty-hint{
+  font-size: .95rem;
+  line-height: 1.5;
+  color: rgba(25,25,25,0.65);
+  max-width: 520px;
+}
+
+.weekly-actions{
+  justify-content: center;
+  margin-top: 18px;
+}
+
+
+.weekly-actions.buttons{
+  display: flex;
+  justify-content: center;
+}
+
+
+/* =========================
+Monthly Review 空狀態（無資料隱藏畫布）
+========================= */
+.monthly-empty{
+  width: 100%;
+  max-width: 620px;
+  margin: 22px auto 8px;
+  padding: 26px 20px;
+  border-radius: 16px;
+  border: 2px dashed rgba(25,25,25,0.22);
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.monthly-empty-hint{
+  font-size: .95rem;
+  line-height: 1.5;
+  color: rgba(25,25,25,0.65);
+}
+
+.unity-image{
+  position: relative;
+  animation: miomoFloatTop 5.8s ease-in-out infinite;
+}
+
+.analysis-card{
+  position: relative;
+  animation: miomoFloatTop 6.6s ease-in-out infinite;
+}
+
+
+.analysis-grid .analysis-card:nth-child(2){ animation-duration: 7.1s; animation-delay: -1.2s; }
+.analysis-grid .analysis-card:nth-child(3){ animation-duration: 6.9s; animation-delay: -2.1s; }
+.analysis-grid .analysis-card:nth-child(4){ animation-duration: 7.4s; animation-delay: -1.7s; }
+.analysis-grid .analysis-card:nth-child(5){ animation-duration: 7.8s; animation-delay: -2.6s; }
+
+#dotbarArea{
+  position: relative;
+  animation: miomoFloatTop 7.2s ease-in-out infinite;
+  animation-delay: -1.4s;
+}
+
+@keyframes miomoFloatTop{
+  0%   { top: 0px; }
+  50%  { top: -6px; }
+  100% { top: 0px; }
+}
+
+
+.analysis-card{
+  will-change: transform;
+  transition: transform .48s cubic-bezier(.2, 1, .2, 1), box-shadow .48s ease;
+}
+
+
+.dotbar-area .line-bar{ position: relative; }
+
+.dotbar-area .dot{
+  transition:
+    left .55s cubic-bezier(.2, 1, .2, 1),
+    transform .22s cubic-bezier(.2, 1, .2, 1),
+    opacity .22s ease;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.dotbar-area .dot:hover{
+  transform: translate(-50%, -50%) scale(1.22);
+}
+
+
+.dotbar-area .emotion-bar.is-inactive .dot{
+  opacity: .55;
+}
+
+/* 右側今日聲音地圖 */
+.right-panel .dotbar-area .emotion-bar:not(.is-inactive) .dot{
+  background: #f4d35e; /* yellow */
+  box-shadow: 0 0 8px rgba(244,211,94,0.35), 0 0 6px rgba(0,0,0,0.18);
+}
+
+
+.dot-tooltip{
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -10px) scale(.98);
+  opacity: 0;
+  pointer-events: none;
+  background: rgba(25,25,25,.82);
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  transition: opacity .18s ease, transform .18s ease;
+  white-space: nowrap;
+  z-index: 20;
+}
+
+.dot-tooltip::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-6px;
+  width:10px;
+  height:10px;
+  background: rgba(25,25,25,.82);
+  transform: translateX(-50%) rotate(45deg);
+  border-radius: 2px;
+}
+
+.dot-tooltip.is-on{
+  opacity: 1;
+  transform: translate(-50%, -16px) scale(1);
+}
+
+
+.week-grid{
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.week-grid.is-single{
+  grid-template-columns: minmax(280px, 440px);
+  justify-content: center;
+}
+
+.week-grid.is-double{
+  grid-template-columns: repeat(2, minmax(260px, 440px));
+  justify-content: center;
+}
+
+.day-card{
+  max-width: 440px;
+}
+
+.day-card .day-img{
+  height: 190px;
+}
+
+@media (max-width: 780px){
+  .week-grid{
+    grid-template-columns: 1fr;
+  }
+  .week-grid.is-single{
+    grid-template-columns: 1fr;
+  }
+  .day-card{
+    max-width: 100%;
+  }
+}
+
+
+
+
+
+/* ================================
+   Mouse Interactive FX (ADD ONLY)
   
+================================ */
+
+/* 讓動畫更順 */
+:root{
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+  --mx: 0px; 
+  --my: 0px;
+  --hover-glow: 0; 
+  --hover-tilt: 1; 
+}
+
+/*  全站滑鼠光暈 */
+.cursor-glow{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .9;
+  mix-blend-mode: multiply; 
+  transition: opacity .25s ease;
+}
+.cursor-glow::before{
+  content:"";
+  position: absolute;
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+  width: 520px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle,
+    rgba(255, 92, 156, 0.18) 0%,
+    rgba(255, 206, 86, 0.12) 25%,
+    rgba(255, 255, 255, 0.00) 60%
+  );
+  filter: blur(6px);
+}
+
+/*  卡片 hover */
+.analysis-card,
+.day-card,
+.unity-image,
+.upload-dropzone,
+.monthly-canvas-wrap{
+  position: relative;
+  transform: translateZ(0);
+  transition: transform .28s cubic-bezier(.2,.8,.2,1),
+              box-shadow .28s cubic-bezier(.2,.8,.2,1),
+              filter .28s ease;
+  will-change: transform, box-shadow, filter;
+}
+
+/* hover 發光邊緣 */
+.analysis-card::after,
+.day-card::after,
+.unity-image::after,
+.upload-dropzone::after,
+.monthly-canvas-wrap::after{
+  content:"";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background:
+    radial-gradient(320px 220px at var(--mx) var(--my),
+      rgba(255, 92, 156, 0.22),
+      rgba(255, 206, 86, 0.12) 35%,
+      rgba(255,255,255,0) 70%);
+}
+
+/* 卡片 hover */
+.analysis-card:hover,
+.day-card:hover,
+.unity-image:hover,
+.upload-dropzone:hover,
+.monthly-canvas-wrap:hover{
+  transform: translateY(-6px) scale(1.01);
+  filter: saturate(1.02);
+  box-shadow: 0 22px 55px rgba(0,0,0,.10);
+}
+.analysis-card:hover::after,
+.day-card:hover::after,
+.unity-image:hover::after,
+.upload-dropzone:hover::after,
+.monthly-canvas-wrap:hover::after{
+  opacity: 1;
+}
+
+/* 滑鼠按壓回饋*/
+.analysis-card:active,
+.day-card:active{
+  transform: translateY(-2px) scale(0.995);
+}
+
+/*  按鈕光暈/浮起磁吸 */
+button, .custom-file-upload{
+  transition: transform .18s ease, filter .18s ease;
+  will-change: transform;
+}
+button:hover, .custom-file-upload:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+}
+button:active, .custom-file-upload:active{
+  transform: translateY(0px) scale(0.98);
+}
+
+/* 滑鼠波紋 */
+.mouse-ripple{
+  position: absolute;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 12px;
+  height: 12px;
+  opacity: 0.35;
+  background: radial-gradient(circle, rgba(255,92,156,.55), rgba(255,206,86,.25), rgba(255,255,255,0));
+  animation: ripple .55s ease-out forwards;
+}
+@keyframes ripple{
+  from{ transform: translate(-50%, -50%) scale(0.8); opacity: .35; }
+  to{ transform: translate(-50%, -50%) scale(18); opacity: 0; }
+}
+
+/*  響應式*/
+@media (max-width: 900px){
+  .analysis-card:hover,
+  .day-card:hover,
+  .unity-image:hover,
+  .upload-dropzone:hover,
+  .monthly-canvas-wrap:hover{
+    transform: translateY(-4px); 
+  }
+}
+
+
+/* =========================================
+   Custom Cursor Dot (ADD ONLY)
+========================================= */
+
+.custom-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+    rgba(255,92,156,1),
+    rgba(255,206,86,.85)
+  );
+  box-shadow:
+    0 0 10px rgba(255,92,156,.45),
+    0 0 22px rgba(255,206,86,.35);
+  transition:
+    width .22s ease,
+    height .22s ease,
+    border-radius .22s ease,
+    box-shadow .22s ease,
+    opacity .22s ease;
+  opacity: .95;
+}
+
+/* Hover 放大、拉橢圓 */
+.custom-cursor.is-hover{
+  width: 22px;
+  height: 22px;
+  border-radius: 40%;
+  box-shadow:
+    0 0 18px rgba(255,92,156,.6),
+    0 0 40px rgba(255,206,86,.45);
+}
+
+/* 點擊回饋 */
+.custom-cursor.is-down{
+  width: 14px;
+  height: 14px;
+  opacity: .85;
+}
+
+
+@media (max-width: 900px){
+  .custom-cursor{
+    display: none;
+  }
+}
+
+
+
+
+/* ================================
+   Back To Top Button
+================================ */
+#backToTop{
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 1200;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255,255,255,0.75);
+  color: #333;
+  font-size: 20px;
+
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+
+  box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+  transition: opacity .3s ease, transform .3s ease;
+}
+#backToTop.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+#backToTop:hover{
+  transform: translateY(-4px);
+}
+
+
+
+/* =========================
+   Upload Wave – Position Fix
+
+========================= */
+
+.upload-header{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-header canvas#wave{
+  display: block;
+  width: 100%;
+  max-width: 600px;   /* 對齊文字內容寬度 */
+  height: 150px;
+  margin-bottom: 12px;
+}
+
+/* =========================================
+   FLOATING MUSIC BUTTON (ADD ONLY)
+========================================= */
+
+
+#musicToggle{
+  position: fixed;
+  top: 80px;          
+  right: 60px;
+  z-index: 1100;
+
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+}
+
+#musicToggle:hover{
+  transform: scale(1.08);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+}
+
+/* ===== 音樂 icon ===== */
+
+.music-icon{
+  position: relative;
+  width: 26px;
+  height: 22px;
+}
+
+/* 喇叭本體 */
+.speaker-body{
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  background: #191919;
+  clip-path: polygon(
+    0 20%,
+    60% 0,
+    100% 0,
+    100% 100%,
+    60% 100%,
+    0 80%
+  );
+}
+
+/* 聲波 */
+.sound-wave{
+  position: absolute;
+  border: 2px solid transparent;
+  border-right-color: #191919;
+  border-radius: 50%;
+  opacity: .85;
+}
+
+.sound-wave.w1{
+  width: 12px;
+  height: 12px;
+  left: 8px;
+  top: 5px;
+}
+
+.sound-wave.w2{
+  width: 18px;
+  height: 18px;
+  left: 8px;
+  top: 2px;
+  opacity: .55;
+}
+
+/* 播放中動畫 */
+#musicToggle.is-playing .w1{
+  animation: soundPulse 1.2s ease-in-out infinite;
+}
+#musicToggle.is-playing .w2{
+  animation: soundPulse 1.2s ease-in-out infinite .2s;
+}
+
+/* 關閉狀態 */
+#musicToggle.is-muted .sound-wave{
+  opacity: 0;
+  animation: none;
+}
+
+#musicToggle.is-muted::after{
+  content:'';
+  position:absolute;
+  width:32px;
+  height:2px;
+  background:#191919;
+  transform: rotate(45deg);
+  opacity:.55;
+}
+
+/* 聲波動畫 */
+@keyframes soundPulse{
+  0%   { transform: scale(0.8); opacity: .4; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(0.8); opacity: .4; }
+}
+
+/* 手機可選擇隱藏 */
+@media (max-width: 768px){
+  #musicToggle{
+    display: none;
+  }
+}
+
+
+
+
+/* =========================================================
+   MIOMO ADD-ONLY PATCH: AUDIO PLAYBACK + MONTHLY UNDO/DIARY/LOGO
+========================================================= */
+
+/* ---- 今日聲音地圖：回播區塊 ---- */
+.audio-playback-panel{
+  margin-top: 18px;
+  padding: 16px 16px 12px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.audio-playback-list{ display:flex; flex-direction:column; gap:12px; }
+.audio-playback-empty{
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fafafa;
+  border: 1px dashed rgba(0,0,0,0.18);
+  color: #777;
+  font-size: 0.9rem;
+}
+.audio-playback-item{
+  padding: 10px 10px 8px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.80);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.audio-playback-item audio{ width:100%; }
+
+
+#monthlyLogoOverlay, .monthly-logo{
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: auto;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0.92;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.10));
+}
+
+
+#monthlyUndoBtn{ display:none; }
+
+
+#monthlyDrawBtn{ position: relative; padding-right: 44px; overflow:hidden; }
+#monthlyDrawBtn.is-on::before,
+#monthlyDrawBtn.is-on::after{
+  content:"";
+  position:absolute;
+  right: 18px;
+  top: 50%;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform-origin:center;
+}
+#monthlyDrawBtn.is-on::before{ transform: translateY(-50%) rotate(45deg); }
+#monthlyDrawBtn.is-on::after{ transform: translateY(-50%) rotate(-45deg); }
+
+/* ---- 月回顧折疊日記 ---- */
+#monthlyFrame{ position: relative; }
+.monthly-diary{
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 340px;
+  max-width: min(340px, 92vw);
+  z-index: 10;
+}
+
+@media (max-width: 980px){
+  .monthly-diary{
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(560px, 92vw);
+    bottom: 12px;
+  }
+}
+
+.monthly-diary-toggle{
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 16px 18px;
+  text-align: left;
+  background: rgba(255,255,255,0.80);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.monthly-diary-toggle:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 24px 52px rgba(0,0,0,0.16);
+}
+
+.monthly-diary-toggle .prompt-default,
+.monthly-diary-toggle .prompt-hover{
+  display:block;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #191919;
+  font-size: .98rem;
+}
+.monthly-diary-toggle .prompt-hover{
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity .2s ease;
+}
+.monthly-diary-toggle:hover .prompt-default{
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+.monthly-diary-toggle:hover .prompt-hover{
+  opacity: 1;
+  height: auto;
+}
+
+.monthly-diary-toggle .prompt-icon{
+  position:absolute;
+  right: 16px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%) rotate(45deg);
+  border-right: 2px solid rgba(0,0,0,0.35);
+  border-bottom: 2px solid rgba(0,0,0,0.35);
+  opacity: .8;
+  transition: transform .22s ease;
+}
+
+.monthly-diary-panel{
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: 100%;
+  transform-origin: bottom right;
+  transform: translateY(10px) scale(.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease, transform .45s cubic-bezier(.2,.85,.2,1);
+}
+
+.monthly-diary.is-open .monthly-diary-panel{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.monthly-diary.is-open .monthly-diary-toggle .prompt-icon{
+  transform: translateY(-50%) rotate(225deg);
+}
+
+
+.monthly-diary-frame{
+  padding: 14px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.14);
+}
+
+
+.monthly-diary-frame .monthly-story-card{
+  margin-top: 0;
+}
+
+
+.monthly-story-card{ transform:none !important; animation:none !important; }
+
+@media (max-width: 980px){
+  .monthly-diary-panel{
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 10px;
+  }
+}
+
+
+
+/* =========================================================
+   MIOMO ADD-ONLY PATCH (MONTHLY UNDO + DIARY + EXPORT + SINGLE PLAYBACK)
+
+========================================================= */
+
+/* --- 今日聲音地圖回播區 --- */
+.audio-playback-panel { margin-top: 10px; }
+.audio-playback-item { padding: 10px; border-radius: 14px; background: rgba(255,255,255,0.75); border: 1px solid rgba(0,0,0,0.06); }
+.audio-playback-item audio { width: 100%; }
+
+/* --- 月回顧隱藏（繪製開啟才顯示） --- */
+#monthlyUndoBtn, #monthlyUndoBtn2 { display: none; }
+
+/* --- 月回顧：繪製按鈕開啟顯示 X --- */
+#monthlyDrawBtn, #drawToggleBtn { position: relative; padding-right: 44px; overflow: hidden; }
+
+#monthlyDrawBtn.is-on::before, #monthlyDrawBtn.is-on::after,
+#drawToggleBtn.is-on::before, #drawToggleBtn.is-on::after{
+  content:"";
+  position:absolute;
+  right: 18px;
+  top: 50%;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform-origin: center;
+}
+#monthlyDrawBtn.is-on::before, #drawToggleBtn.is-on::before { transform: translateY(-50%) rotate(45deg); }
+#monthlyDrawBtn.is-on::after,  #drawToggleBtn.is-on::after  { transform: translateY(-50%) rotate(-45deg); }
+
+/* --- 月回顧 --- */
+#monthlyLogoOverlay, .monthly-logo{
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: auto;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0.92;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.10));
+}
+
+/* --- 折疊日記 --- */
+#monthlyFrame{ position: relative; }
+
+.monthly-diary{
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 340px;
+  max-width: min(340px, 92vw);
+  z-index: 10;
+}
+
+@media (max-width: 980px){
+  .monthly-diary{
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(560px, 92vw);
+    bottom: 12px;
+  }
+}
+
+.monthly-diary-toggle{
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 16px 18px;
+  text-align: left;
+  background: rgba(255,255,255,0.80);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.monthly-diary-toggle:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 24px 52px rgba(0,0,0,0.16);
+}
+
+.monthly-diary-toggle .prompt-default,
+.monthly-diary-toggle .prompt-hover{
+  display:block;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #191919;
+  font-size: .98rem;
+}
+
+.monthly-diary-toggle .prompt-hover{
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity .2s ease;
+}
+.monthly-diary-toggle:hover .prompt-default{
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+.monthly-diary-toggle:hover .prompt-hover{
+  opacity: 1;
+  height: auto;
+}
+
+.monthly-diary-toggle .prompt-icon{
+  position:absolute;
+  right: 16px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%) rotate(45deg);
+  border-right: 2px solid rgba(0,0,0,0.35);
+  border-bottom: 2px solid rgba(0,0,0,0.35);
+  opacity: .8;
+  transition: transform .22s ease;
+}
+
+.monthly-diary-panel{
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 10px);
+  width: 100%;
+  transform-origin: bottom right;
+  transform: translateY(10px) scale(.96);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease, transform .35s cubic-bezier(.2,.85,.2,1);
+}
+
+.monthly-diary.is-open .monthly-diary-panel{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.monthly-diary.is-open .monthly-diary-toggle .prompt-icon{
+  transform: translateY(-50%) rotate(225deg);
+}
+
+
+.monthly-story-card{
+  transform: none !important;
+  animation: none !important;
+}
+
+@media (max-width: 980px){
+  .monthly-diary-panel{
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 10px;
+  }
+}
+
+
+#monthlyEmotionCard{ display:none; }
+
+
+
+/* =========================================================
+   MIOMO FIX PATCH (DIARY LAYOUT + UNDO VISIBILITY + PANEL FRAME)
+========================================================= */
+
+#monthlyUndoBtn{ display:none; } /* default hidden */
+
+/* Diary in-flow under toolbar */
+.monthly-diary{
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: min(620px, 100%) !important;
+  max-width: 620px !important;
+  margin: 14px auto 0 !important;
+  z-index: 2 !important;
+}
+
+/* Toggle button */
+.monthly-diary-toggle{
+  width: 100%;
+  border-radius: 18px;
+}
+
+/* Panel expands downward (no overlay) */
+.monthly-diary-panel{
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  margin-top: 10px !important;
+
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px) scaleY(.96);
+  transform-origin: top;
+  pointer-events: none;
+  transition: max-height .55s cubic-bezier(.2,.85,.2,1), opacity .28s ease, transform .35s ease;
+}
+
+.monthly-diary.is-open .monthly-diary-panel{
+  max-height: 520px;
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  pointer-events: auto;
+}
+
+/* Outer frame (主視覺邊框感) */
+.monthly-diary-frame{
+  border-radius: 20px;
+  padding: 10px;
+  background: rgba(255,255,255,0.65);
+  border: 2px solid rgba(234,134,170,0.55);
+  box-shadow: 0 18px 48px rgba(0,0,0,0.10);
+}
+
+/* Make sure story card feels intentional */
+#monthlyStoryCard{
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Small screens */
+@media (max-width: 640px){
+  .monthly-diary{
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .monthly-diary-frame{
+    padding: 8px;
+  }
+}
+
+/* =========================================================
+   MIOMO MONTHLY LAYOUT UPDATE 
+========================================================= */
+
+#monthlyFrame .monthly-top{
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#monthlyFrame #monthlyLogoOverlay.monthly-logo{
+  position: static !important;      
+  transform: none !important;
+  left: auto !important;
+  top: auto !important;
+  display: block;
+  width: 150px;
+  height: auto;
+  opacity: 0.92;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.10));
+  margin: 0 auto;
+}
+
+#monthlyFrame #monthlyToolbar{
+  margin-top: 0 !important;        
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+
+#monthlyStage{
+  clip-path: inset(0 0 7% 0 round 22px);
+}
+
+
+#monthlyFrame .monthly-diary{
+  position: static !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: min(620px, 100%);
+  max-width: 100%;
+  margin: 18px auto 0;
+  z-index: 1;
+}
+
+#monthlyFrame .monthly-diary-panel{
+  margin-top: 10px;
+}
+
