@@ -9,7 +9,8 @@
     font-family: "Arial", sans-serif;
     background-color: #000;
     color: #fff;
-    
+    cursor: none; 
+     overflow-x: hidden;
   }
 
 body::-webkit-scrollbar {
@@ -130,19 +131,41 @@ transition: background-color 0.3s ease, border-color 0.3s ease;
     to { background-position: 24px 0; }
   }
 
-  /* ========== 首頁封面 ========== */
-  .hero {
-    height: 100vh;
-    width: 100%;
-    
-    background-image: url('../image/miomo_banner.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding-top: 120px;
-    display: flex;
-    align-items: flex-end;
-  }
+  /* ========== 首頁封面（影片背景） ========== */
+
+.hero {
+  position: relative;     
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  align-items: flex-end;
+  padding-top: 120px;
+}
+
+/* 影片背景容器 */
+.video-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* 影片本體 */
+.video-background video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* 背景圖鋪滿 */
+  object-position: center;
+}
+
+
+.hero > *:not(.video-background) {
+  position: relative;
+  z-index: 1;
+}
+
 
   .hero-text {
     margin: 0 0 60px 60px;
@@ -248,7 +271,7 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 width: 400px !important;   
-  height: auto !important;   /* 高度自動保持比例 */
+  height: auto !important;  
 pointer-events: none;
 opacity: 0;
 z-index: 3;
@@ -425,6 +448,103 @@ transition: transform 0.3s ease-out;
 .card-slider-item:hover img {
 transform: scale(1.1); /* 放大  */
 }
+
+
+
+
+
+/* =========================================
+   CARD PAGE – PRETTY DECK (ADD ONLY)
+========================================= */
+.card-page{
+  overflow: hidden;                
+}
+
+.card-slider-container{
+  height: 100%;
+  pointer-events: none;             
+}
+
+
+.card-slider-item{
+  left: 50%;
+  top: 50%;
+  will-change: transform;
+  transform-origin: center center;
+
+  /* base variables */
+  --sx: 0px;
+  --sy: 0px;
+  --rot: 0deg;
+
+  /* hover variables */
+  --hx: 0px;
+  --hy: 0px;
+  --hs: 1;
+  --hr: 0deg;
+
+  transform:
+    translate(-50%, -50%)
+    translate3d(calc(var(--sx) + var(--hx)), calc(var(--sy) + var(--hy)), 0)
+    rotate(calc(var(--rot) + var(--hr)))
+    scale(var(--hs));
+
+  transition:
+    transform .55s cubic-bezier(.2, 1, .2, 1),
+    box-shadow .55s cubic-bezier(.2, 1, .2, 1),
+    filter .45s ease;
+  filter: saturate(1.05) contrast(1.02);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.24);
+}
+
+/* 邊緣亮面 */
+.card-slider-item::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius: 20px;
+  pointer-events:none;
+  background: radial-gradient(600px 280px at var(--mx, 50%) var(--my, 50%),
+    rgba(255,255,255,0.32), rgba(255,255,255,0) 55%);
+  opacity: .0;
+  transition: opacity .35s ease;
+}
+
+
+.card-slider-item:hover{
+  --hy: -16px;
+  --hs: 1.05;
+  box-shadow: 0 22px 60px rgba(0,0,0,0.32);
+}
+.card-slider-item:hover::after{ opacity: .95; }
+
+
+.card-slider-item img{
+  transform: scale(1);
+  transition: transform .45s cubic-bezier(.2, 1, .2, 1);
+  backface-visibility: hidden;
+}
+
+/* hover 時把 tilt 加到 img（--rx/--ry 由 JS 即時更新） */
+.card-slider-item:hover img{
+  transform: scale(1.08) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+}
+
+
+.card-page{ cursor: default; }
+.card-slider-item{ cursor: grab; }
+.card-slider-item:active{ cursor: grabbing; }
+
+/* RWD */
+@media (max-width: 1024px){
+  .card-slider-item{
+    box-shadow: 0 10px 26px rgba(0,0,0,0.20);
+  }
+}
+
+
+
+
 
 
 
@@ -780,6 +900,10 @@ nav a {
 }
 }
 
+
+
+
+
 /* RWD小於 480px  */
 @media (max-width: 480px) {
 nav {
@@ -856,3 +980,399 @@ nav a {
     }
   }
   
+
+
+
+
+/* 讓動畫更順 */
+:root{
+  --mouse-x: 50vw;
+  --mouse-y: 50vh;
+  --mx: 0px; /* card內相對座標 */
+  --my: 0px;
+  --hover-glow: 0; 
+  --hover-tilt: 1; 
+}
+
+/*  全站滑鼠光暈 */
+.cursor-glow{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: .9;
+  mix-blend-mode: multiply; 
+  transition: opacity .25s ease;
+}
+.cursor-glow::before{
+  content:"";
+  position: absolute;
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+  width: 520px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: radial-gradient(circle,
+    rgba(255, 92, 156, 0.18) 0%,
+    rgba(255, 206, 86, 0.12) 25%,
+    rgba(255, 255, 255, 0.00) 60%
+  );
+  filter: blur(6px);
+}
+
+/*  互動元素：卡片 hover */
+.analysis-card,
+.day-card,
+.unity-image,
+.upload-dropzone,
+.monthly-canvas-wrap{
+  position: relative;
+  transform: translateZ(0);
+  transition: transform .28s cubic-bezier(.2,.8,.2,1),
+              box-shadow .28s cubic-bezier(.2,.8,.2,1),
+              filter .28s ease;
+  will-change: transform, box-shadow, filter;
+}
+
+/* hover 發光邊緣 */
+.analysis-card::after,
+.day-card::after,
+.unity-image::after,
+.upload-dropzone::after,
+.monthly-canvas-wrap::after{
+  content:"";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background:
+    radial-gradient(320px 220px at var(--mx) var(--my),
+      rgba(255, 92, 156, 0.22),
+      rgba(255, 206, 86, 0.12) 35%,
+      rgba(255,255,255,0) 70%);
+}
+
+/* 卡片 hover：浮起 + 光暈顯示 */
+.analysis-card:hover,
+.day-card:hover,
+.unity-image:hover,
+.upload-dropzone:hover,
+.monthly-canvas-wrap:hover{
+  transform: translateY(-6px) scale(1.01);
+  filter: saturate(1.02);
+  box-shadow: 0 22px 55px rgba(0,0,0,.10);
+}
+.analysis-card:hover::after,
+.day-card:hover::after,
+.unity-image:hover::after,
+.upload-dropzone:hover::after,
+.monthly-canvas-wrap:hover::after{
+  opacity: 1;
+}
+
+/* 滑鼠按壓回饋*/
+.analysis-card:active,
+.day-card:active{
+  transform: translateY(-2px) scale(0.995);
+}
+
+/*  按鈕光暈/浮起磁吸 */
+button, .custom-file-upload{
+  transition: transform .18s ease, filter .18s ease;
+  will-change: transform;
+}
+button:hover, .custom-file-upload:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+}
+button:active, .custom-file-upload:active{
+  transform: translateY(0px) scale(0.98);
+}
+
+/* 滑鼠波紋 */
+.mouse-ripple{
+  position: absolute;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  width: 12px;
+  height: 12px;
+  opacity: 0.35;
+  background: radial-gradient(circle, rgba(255,92,156,.55), rgba(255,206,86,.25), rgba(255,255,255,0));
+  animation: ripple .55s ease-out forwards;
+}
+@keyframes ripple{
+  from{ transform: translate(-50%, -50%) scale(0.8); opacity: .35; }
+  to{ transform: translate(-50%, -50%) scale(18); opacity: 0; }
+}
+
+/*  響應式：手機不做 3D 傾斜 */
+@media (max-width: 900px){
+  .analysis-card:hover,
+  .day-card:hover,
+  .unity-image:hover,
+  .upload-dropzone:hover,
+  .monthly-canvas-wrap:hover{
+    transform: translateY(-4px); /* 保留浮起但不傾斜 */
+  }
+}
+
+
+/* =========================================
+   Custom Cursor Dot (ADD ONLY)
+   小圓點主體游標
+========================================= */
+
+.custom-cursor{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+    rgba(255,92,156,1),
+    rgba(255,206,86,.85)
+  );
+  box-shadow:
+    0 0 10px rgba(255,92,156,.45),
+    0 0 22px rgba(255,206,86,.35);
+  transition:
+    width .22s ease,
+    height .22s ease,
+    border-radius .22s ease,
+    box-shadow .22s ease,
+    opacity .22s ease;
+  opacity: .95;
+}
+
+/* Hover 放大拉橢圓 */
+.custom-cursor.is-hover{
+  width: 22px;
+  height: 22px;
+  border-radius: 40%;
+  box-shadow:
+    0 0 18px rgba(255,92,156,.6),
+    0 0 40px rgba(255,206,86,.45);
+}
+
+/* 點擊回饋 */
+.custom-cursor.is-down{
+  width: 14px;
+  height: 14px;
+  opacity: .85;
+}
+
+/* 手機版關閉 */
+@media (max-width: 900px){
+  .custom-cursor{
+    display: none;
+  }
+}
+
+
+/* ================================
+   Back To Top Button
+================================ */
+#backToTop{
+  position: fixed;
+  right: 28px;
+  bottom: 32px;
+  z-index: 1200;
+
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255,255,255,0.75);
+  color: #333;
+  font-size: 20px;
+
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+
+  box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+  transition: opacity .3s ease, transform .3s ease;
+}
+#backToTop.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+#backToTop:hover{
+  transform: translateY(-4px);
+}
+
+/* =========================================
+   封面固定
+========================================= */
+.hero.hero--fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 0;
+}
+
+.hero.hero--fixed .video-background{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero.hero--fixed .video-background video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+
+.hero-spacer{
+  height: 100vh;
+  width: 100%;
+}
+
+
+.about,
+.card-page,
+.sound-map-section,
+.footer{
+  position: relative;
+  z-index: 1;
+}
+
+
+
+:root{
+  
+  --page-gutter: 48px;    
+  --page-max: 1100px;      
+}
+
+
+.wave-layer{
+  width: min(calc(100vw - (var(--page-gutter) * 2)), var(--page-max));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.wave-layer canvas{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.about{
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+}
+
+
+.about .about-content{
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+}
+
+
+.about .image-wrapper{
+  width: min(80%, var(--page-max));
+}
+
+
+
+
+.card-page{
+  position: relative; 
+
+.card-hint{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+  pointer-events: none; 
+}
+
+.card-hint-bubble{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.85);
+  border: 1px dashed rgba(234, 134, 170, 0.55);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.10);
+
+  color: #333;
+  font-size: 14px;
+  letter-spacing: 3px;
+  font-weight: 600;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  
+  animation: hintBob 1.6s ease-in-out infinite;
+  transform: translateZ(0);
+}
+
+
+.card-hint-bubble::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  transform: translateX(-50%) rotate(45deg);
+
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,0.85);
+  border-right: 1px dashed rgba(234, 134, 170, 0.55);
+  border-bottom: 1px dashed rgba(234, 134, 170, 0.55);
+  box-shadow: 6px 10px 20px rgba(0,0,0,0.06);
+}
+
+
+.card-hint-bubble::before{
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,222,129,0.9), rgba(234,134,170,0.65));
+  box-shadow: 0 6px 14px rgba(234, 134, 170, 0.18);
+  opacity: 0.9;
+}
+
+
+@keyframes hintBob{
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-8px) scale(1.02); }
+  55%  { transform: translateY(-4px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+
+@media (max-width: 768px){
+  .card-hint-bubble{
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 9px 14px;
+  }
+}
