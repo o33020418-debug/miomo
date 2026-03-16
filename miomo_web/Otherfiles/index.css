@@ -1376,3 +1376,273 @@ button:active, .custom-file-upload:active{
     padding: 9px 14px;
   }
 }
+
+
+/* ========================================
+INDEX Mobile Fix
+
+======================================== */
+
+@media (max-width:768px){
+
+/* ===== Header ===== */
+
+header{
+flex-direction:column;
+gap:10px;
+padding:15px 20px;
+}
+
+nav{
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+}
+
+nav a{
+font-size:14px;
+}
+
+
+/* ========================================
+ABOUT 區塊
+======================================== */
+
+/* 小尺寸隱藏背景圖 */
+
+.image-mask{
+display:none;
+}
+
+/* 圖片容器 */
+
+.image-wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+width:100%;
+}
+
+/* 產品圖放大 */
+
+.product-image{
+position:relative !important;
+transform:none !important;
+left:auto !important;
+top:auto !important;
+
+width:90%;
+max-width:420px;
+height:auto;
+
+margin:30px auto;
+display:block;
+}
+
+
+/* ========================================
+產品介紹文字
+======================================== */
+
+.line-text-container{
+position:relative !important;
+left:auto !important;
+right:auto !important;
+top:auto !important;
+
+justify-content:center;
+margin:12px 0;
+}
+
+.line{
+display:none;
+}
+
+.line-text{
+font-size:15px;
+text-align:center;
+}
+
+
+/* ========================================
+卡片區塊
+
+======================================== */
+
+.card-slider-container{
+display:flex;
+overflow-x:auto;
+gap:18px;
+padding:20px;
+
+scroll-snap-type:x mandatory;
+}
+
+/* 卡片寬度 */
+
+
+.card-slider-container{
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 10px 20px;
+  width: 100%;
+  scroll-snap-type: x mandatory;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.card-slider-item{
+  flex: 0 0 auto;
+  width: 90%; /* 直式滿版感 */
+  max-width: 280px;
+  height: auto;
+  scroll-snap-align: center;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+  pointer-events: auto;
+  background: #fff;
+}
+
+.card-slider-item img{
+  width: 100%;
+  height: auto; /* 保持直式比例 */
+  object-fit: contain; /* 不裁切 */
+  border-radius: 16px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card-slider-item:hover img{
+  transform: scale(1.05);
+}
+
+
+/* ========================================
+Card Hover Hint 
+======================================== */
+
+.card-page{
+position:relative;
+}
+
+/* 提示容器 */
+
+.card-hint{
+position:absolute;
+top:20px;
+right:20px;
+
+display:block !important;
+
+opacity:0;
+transition:opacity 0.3s ease;
+
+pointer-events:none;
+z-index:10;
+}
+
+
+/* ===== Card Hint Bubble ===== */
+.card-hint{
+  display: flex !important;
+  justify-content: center;
+  margin-top: 16px;
+  pointer-events: auto;
+  z-index: 20;
+  opacity: 1;
+}
+
+.card-hint-bubble{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.85);
+  border: 1px dashed rgba(234,134,170,0.55);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.10);
+  color: #333;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 600;
+  pointer-events: auto;
+  animation: hintBob 1.6s ease-in-out infinite;
+}
+
+.card-hint-bubble::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 14px;
+  height: 14px;
+  background: rgba(255,255,255,0.85);
+  border-right: 1px dashed rgba(234,134,170,0.55);
+  border-bottom: 1px dashed rgba(234,134,170,0.55);
+}
+
+.card-hint-bubble::before{
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,222,129,0.9), rgba(234,134,170,0.65));
+  box-shadow: 0 6px 14px rgba(234,134,170,0.18);
+  opacity: 0.9;
+}
+
+@keyframes hintBob{
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-8px) scale(1.02); }
+  55%  { transform: translateY(-4px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* ========================================
+聲音地圖
+======================================== */
+
+.card-grid{
+grid-template-columns:1fr;
+gap:25px;
+}
+
+
+/* ========================================
+按鈕
+======================================== */
+
+.record-button{
+width:100%;
+max-width:260px;
+font-size:16px;
+}
+
+
+/* ========================================
+Footer
+======================================== */
+
+.footer{
+padding:30px 20px;
+}
+
+.footer-container{
+font-size:12px;
+line-height:1.6;
+text-align:center;
+}
+
+}
+
+}
