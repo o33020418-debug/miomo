@@ -803,28 +803,66 @@ $btn.onclick = async () => {
     }
 
     if ($log) $log.textContent = '⏳ 分段與分析中…';
+if ($log) $log.textContent = '⏳ 分段與分析中…';
 
-    // 切段並分析每段
-    const segs = splitSegments(data, sr, segSec);
-    const useSegs = segs.length ? segs : [data];
-    const results = [];
-    let lines = [];
+// 使用上面已經取得的 segSec
+const segs = splitSegments(data, sr, segSec);
 
-    for (let i = 0; i < useSegs.length; i++) {
-      const f = extractFeatures(useSegs[i], sr);
-      const cls = classifySegment(f);
-      const env = makeEnvelope(useSegs[i], 160);
-      results.push({ axis: cls.axis, level: cls.level, env });
-      lines.push(
-        `#${i + 1} rms=${f.rms.toFixed(4)} zcr=${f.zcr.toFixed(3)} cent=${f.cent.toFixed(
-          0
-        )} cv=${f.cv.toFixed(2)} p/s=${f.peakps.toFixed(1)} amax=${f.amax.toFixed(
-          2
-        )} crest=${f.crest.toFixed(1)} -> ${cls.axis}_${cls.level}${
-          cls.flags.burst ? ' (burst)' : ''
-        }`
-      );
-    }
+// 嚴格保證切段數正確
+const expectedSegments = Math.ceil(data.length / (sr * segSec));
+
+// 一定要先宣告
+let results = [];
+
+for (let i = 0; i < Math.min(segs.length, expectedSegments); i++) {
+  const seg = segs[i];
+
+  // 跳過過短空片段
+  if (!seg || seg.length < sr * 0.3) continue;
+
+  const features = extractFeatures(seg, sr);
+  const classified = classifySegment(features);
+
+  const stableResult = makeUniqueStableResult(
+    classified,
+    seg,
+    i
+  );
+
+  const enhancedResult = enhanceVoiceDifference(
+  stableResult,
+  seg,
+  sr
+);
+
+  stableResult.env = makeEnvelope(seg, 160);
+
+  results.push(enhancedResult);
+}
+
+// 去除完全重複
+results = removeExactDuplicates(results);
+
+// 嚴格依音檔順序排序
+results.sort((a, b) => a.order - b.order);
+
+// 儲存結果
+window.__lastResults = results.map(r => ({ ...r }));
+
+// 畫圖
+drawClosedCircle(ctx, results, {
+  showLabels: true,
+  signature: window.__lastSignature720 || null
+});
+
+// log
+if ($log) {
+  $log.textContent =
+    `Segments: ${results.length}（切段=${segSec}s）\n` +
+    results.map((r, i) =>
+      `${i + 1}. ${r.axis}_${r.level}`
+    ).join('\n');
+}
 
 
     // 自動補齊五軸的平均情緒值
@@ -4884,3 +4922,190 @@ if (weeklyEmpty) weeklyEmpty.style.display = savedCount === 0 ? 'flex' : 'none';
   window.makeStory = makeMonthlyStory;
 
 })();
+
+
+/* =========================================
+   MIOMO Mobile Audio Support (ADD ONLY)
+   手機 / 平板 音檔上傳與分析支援
+   不影響原本桌機邏輯
+========================================= */
+
+(function () {
+
+  const fileInput = document.getElementById("fileInput");
+  const analyzeBtn = document.getElementById("analyzeBtn");
+
+  if (!fileInput || !analyzeBtn) return;
+
+  let mobileAudioBuffer = null;
+  let audioContext = null;
+
+  /* =========================
+     1️⃣ 建立 AudioContext（相容 iOS）
+  ========================= */
+  function getAudioContext() {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioContext;
+  }
+
+  /* =========================
+     2️⃣ 解鎖 AudioContext（手機必要）
+  ========================= */
+  function unlockAudioContext() {
+    const ctx = getAudioContext();
+
+    if (ctx.state === "suspended") {
+      ctx.resume();
+    }
+  }
+
+  document.addEventListener("touchstart", unlockAudioContext, { once: true });
+  document.addEventListener("click", unlockAudioContext, { once: true });
+
+  /* =========================
+     3️⃣ 手機檔案讀取（核心）
+  ========================= */
+  fileInput.addEventListener("change", function (e) {
+
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const ctx = getAudioContext();
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+
+      const arrayBuffer = event.target.result;
+
+      ctx.decodeAudioData(arrayBuffer)
+        .then(buffer => {
+          mobileAudioBuffer = buffer;
+
+          console.log("✅ Mobile 音檔解碼成功");
+
+          // 👉 不干擾你原本 log
+          const log = document.getElementById("log");
+          if (log) log.textContent = "音檔已載入（手機模式）";
+        })
+        .catch(err => {
+          console.error("❌ 音檔解碼失敗", err);
+        });
+    };
+
+    reader.readAsArrayBuffer(file);
+  });
+
+  /* =========================
+     4️⃣ 攔截分析按鈕（只在 mobile 用）
+  ========================= */
+  analyzeBtn.addEventListener("click", function () {
+
+    // 如果桌機原本邏輯有跑 → 不干擾
+    if (!mobileAudioBuffer) return;
+
+    console.log("📱 使用 Mobile AudioBuffer 分析");
+
+    try {
+      // 👉 如果你原本有分析函式（例如 analyzeAudio）
+      if (typeof window.analyzeAudio === "function") {
+        window.analyzeAudio(mobileAudioBuffer);
+      }
+
+      // 👉 fallback（避免你原本沒寫成函式）
+      else {
+        console.warn("⚠️ 找不到 analyzeAudio()，請確認原本分析函式名稱");
+      }
+
+    } catch (err) {
+      console.error("分析錯誤:", err);
+    }
+  });
+
+})();
+
+
+/* =========================
+   Voice Fingerprint Enhancer (ADD ONLY)
+   目的：
+   1. 相同錄音固定結果
+   2. 相似錄音也能放大差異
+   3. 不使用亂數
+========================= */
+
+function calcVoiceFingerprint(seg, sr) {
+  const len = seg.length;
+  const step = Math.max(1, Math.floor(len / 300));
+
+  let energy = 0;
+  let zeroCross = 0;
+  let variance = 0;
+  let peak = 0;
+
+  let prev = seg[0] || 0;
+  let mean = 0;
+  let count = 0;
+
+  for (let i = 0; i < len; i += step) {
+    const v = seg[i];
+
+    mean += v;
+    energy += Math.abs(v);
+
+    if (Math.sign(v) !== Math.sign(prev)) zeroCross++;
+
+    if (Math.abs(v) > peak) peak = Math.abs(v);
+
+    prev = v;
+    count++;
+  }
+
+  mean /= count;
+
+  for (let i = 0; i < len; i += step) {
+    variance += Math.pow(seg[i] - mean, 2);
+  }
+
+  variance /= count;
+
+  return {
+    energy,
+    zeroCross,
+    variance,
+    peak,
+    fingerprintScore:
+      energy * 0.35 +
+      zeroCross * 0.25 +
+      variance * 0.25 +
+      peak * 0.15
+  };
+}
+
+function enhanceVoiceDifference(result, seg, sr) {
+  const fp = calcVoiceFingerprint(seg, sr);
+
+  const enhanced = { ...result };
+
+  // 放大 level 差異（非亂數）
+  const diffFactor = Math.floor(fp.fingerprintScore % 3);
+
+  enhanced.level = Math.max(
+    1,
+    Math.min(5, result.level + diffFactor - 1)
+  );
+
+  // 增加 shapeBias 讓圖形更有差異
+  enhanced.shapeBias = {
+    stretch: 1 + (fp.energy % 0.3),
+    twist: (fp.zeroCross % 7) * 0.08,
+    density: 1 + (fp.variance % 0.2)
+  };
+
+  enhanced.voiceFingerprint = fp;
+
+  return enhanced;
+}
+
+
+
